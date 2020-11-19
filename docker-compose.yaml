@@ -1,0 +1,31 @@
+# Conexion
+
+# server: mysql
+# user: root
+# PASSWORD: helloworld
+version: '2'
+
+services:
+  mysql:
+    image: mariadb
+    container_name: dev_mysql
+    ports:
+     - '6603:3306'
+    environment:
+      MYSQL_USER: user
+      MYSQL_PASSWORD: helloworld
+      MYSQL_ROOT_PASSWORD: helloworld
+      MYSQL_DATABASE: default_schema
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: dev_pma
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8080:80
